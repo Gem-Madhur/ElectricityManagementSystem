@@ -94,7 +94,7 @@ public class SupplierControllerTest {
     void updateSupplierDetailTest() throws Exception {
         Supplier supplier1 = new Supplier(1100L, "Tata", "Urban");
         when(supplierService.updateSupplierDetails(anyLong(), any(Supplier.class))).thenReturn(supplier1);
-        this.mockMvc.perform(put("/update/{sId}", 1100L)
+        this.mockMvc.perform(put("/suppliers/update/{sId}", 1100L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(supplier1)))
                 .andExpect(status().isOk())
@@ -106,7 +106,7 @@ public class SupplierControllerTest {
     @Test
     void deleteSupplierTest() throws Exception {
         doNothing().when(supplierService).deleteSupplier(anyLong());
-        this.mockMvc.perform(delete("/delete/{sId}", 1100L))
+        this.mockMvc.perform(delete("/suppliers/delete/{sId}", 1100L))
                 .andExpect(status().isOk());
         verify(supplierService).deleteSupplier(1100L);
     }

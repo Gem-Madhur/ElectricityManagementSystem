@@ -108,7 +108,7 @@ public class CustomerControllerTest {
         Customer customer1 = new Customer(8L, "Madhur", "BW", null, 0L,
                 0L, 0d, null,null);
         when(customerService.updateCustomerById(anyLong(),any(Customer.class))).thenReturn(customer1);
-        this.mockMvc.perform(put("/update/{cId}", 1L)
+        this.mockMvc.perform(put("/customers/update/{cId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer1)))
                 .andExpect(status().isOk())
@@ -120,7 +120,7 @@ public class CustomerControllerTest {
     @Test
     void deleteCustomerTest() throws Exception {
         doNothing().when(customerService).deleteCustomer(anyLong());
-        this.mockMvc.perform(delete("/delete/{cId}", 8L))
+        this.mockMvc.perform(delete("/customers/delete/{cId}", 8L))
                 .andExpect(status().isOk());
         verify(customerService).deleteCustomer(8L);
     }

@@ -57,7 +57,7 @@ public class MeterController {
      * @param meter - Meter's Details
      * @return ResponseEntity
      */
-    @PutMapping(path = "/update/{mId}")
+    @PutMapping(path = "/meters/update/{mId}")
     public ResponseEntity<Meter> updateMeter(@PathVariable final Long mId,@RequestBody final Meter meter) throws IdNotFoundException{
         return new ResponseEntity<>(meterServiceIm.updateMeter(mId,meter),HttpStatus.OK);
     }
@@ -67,7 +67,7 @@ public class MeterController {
      * @param mId - Meter's ID
      * @return ResponseEntity
      */
-    @DeleteMapping(path = "/delete/{mId}")
+    @DeleteMapping(path = "/meters/delete/{mId}")
     public ResponseEntity<HttpStatus> deleteMeter(@PathVariable final Long mId) throws IdNotFoundException{
         meterServiceIm.deleteMeter(mId);
         return new ResponseEntity<>(HttpStatus.OK);

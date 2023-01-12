@@ -92,7 +92,7 @@ public class MeterControllerTest {
     void updateMeterTest() throws Exception {
         Meter meter = new Meter(1010L, 1F, 3000F);
         when(meterService.updateMeter(anyLong(), any(Meter.class))).thenReturn(meter);
-        this.mockMvc.perform(put("/update/{mId}", 1L)
+        this.mockMvc.perform(put("/meters/update/{mId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(meter)))
                 .andExpect(status().isOk())
@@ -103,7 +103,7 @@ public class MeterControllerTest {
     @Test
     void deleteMeterTest() throws Exception {
         doNothing().when(meterService).deleteMeter(anyLong());
-        this.mockMvc.perform(delete("/delete/{mId}", 1010L))
+        this.mockMvc.perform(delete("/meters/delete/{mId}", 1010L))
                 .andExpect(status().isOk());
         verify(meterService).deleteMeter(1010L);
     }
