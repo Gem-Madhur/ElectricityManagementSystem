@@ -66,7 +66,26 @@ public class CustomerServiceIm implements CustomerService {
     public Customer addCustomer(final Customer customer) throws ResourceNotFoundException{
         Optional<Meter> meterOptional = Optional.ofNullable(customer.getMeter());
         Optional<Supplier> supplierOptional = Optional.ofNullable(customer.getSupplier());
-        if(meterOptional.isEmpty() && supplierOptional.isEmpty()){
+        if(customer.getCName()==null){
+            log.info("Customer Name is missing");
+            throw new ResourceNotFoundException("Please enter valid Customer Name");
+        } else if(customer.getCAddress()==null){
+            log.info("Customer Address is missing");
+            throw new ResourceNotFoundException("Please enter valid Customer Address");
+        }
+        else if(customer.getConnectionDate()==null){
+            log.info("Connection Date is missing");
+            throw new ResourceNotFoundException("Please enter a valid Connection Date");
+        }
+        else if(customer.getLastReading()==null){
+            log.info("Last Reading is missing");
+            throw  new ResourceNotFoundException("Please enter a valid Last Reading");
+        }
+        else if(customer.getCurrReading()==null){
+            log.info("Current Reading is missing");
+            throw new ResourceNotFoundException("Please enter a valid Current Reading");
+        }
+        else if(meterOptional.isEmpty() && supplierOptional.isEmpty()){
             log.info("Invalid or Details are Missing");
             throw new ResourceNotFoundException("Please enter valid Meter and Supplier details");
         }else if(supplierOptional.isEmpty()){
@@ -166,8 +185,8 @@ public class CustomerServiceIm implements CustomerService {
         else if(netUnitConsumed>500){
             billAmount = 100*3 + 200*5 + 300*6 + 400*7+ 500*7.5 + (netUnitConsumed-500)*8;
         }
-        double finalBillAmouint = billAmount>= customer.getMeter().getMinBillAmount()? billAmount : customer.getMeter().getMinBillAmount();
-        customer.setBillAmount(finalBillAmouint);
+        double finalBillAmount = billAmount>= customer.getMeter().getMinBillAmount()? billAmount : customer.getMeter().getMinBillAmount();
+        customer.setBillAmount(finalBillAmount);
 
         log.info("Customer Data is Updated");
         return customerRepository.save(customer);

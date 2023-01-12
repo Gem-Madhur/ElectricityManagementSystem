@@ -102,7 +102,7 @@ public class MeterServiceIm implements MeterService{
         Optional<Meter> meter = meterRepository.findById(mId);
         if(meter.isEmpty()){
             log.info("Invalid Meter ID");
-            throw new IdNotFoundException("No meter found for " + mId +"meter id");
+            throw new IdNotFoundException("Meter not found with id- " + mId );
         }
         log.info("Meter has been Deleted");
         meterRepository.deleteById(mId);
