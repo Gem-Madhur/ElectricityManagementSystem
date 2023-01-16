@@ -10,11 +10,11 @@ import java.util.List;
 public interface MeterService {
     List<Meter> getMeters () throws DataNotFoundException;
 
-    Meter getMeterById(Long mId) throws IdNotFoundException;
+    Meter getMeterById(Long meterId) throws IdNotFoundException;
 
     Meter addMeter(Meter meter) throws ResourceNotFoundException;
 
-    Meter updateMeter(Long mId , Meter meter) throws IdNotFoundException , ResourceNotFoundException;
+    Meter updateMeter(Long meterId, Meter meter) throws IdNotFoundException, ResourceNotFoundException;
 
-    void deleteMeter(Long mId) throws IdNotFoundException;
+    void deleteMeter(Long meterId) throws IdNotFoundException;
 }

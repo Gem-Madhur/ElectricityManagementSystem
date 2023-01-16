@@ -4,7 +4,6 @@ import com.demoproject.ems.entity.Meter;
 import com.demoproject.ems.exception.DataNotFoundException;
 import com.demoproject.ems.exception.IdNotFoundException;
 import com.demoproject.ems.exception.ResourceNotFoundException;
-import com.demoproject.ems.repository.CustomerRepository;
 import com.demoproject.ems.repository.MeterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +39,16 @@ public class MeterServiceIm implements MeterService{
 
     /**
      * to get Meters details with Meter's ID
-     * @param mId - Meter's ID
+     *
+     * @param meterId - Meter's ID
      * @return Meter's Details
      */
     @Override
-    public Meter getMeterById(final Long mId) throws IdNotFoundException {
-        Optional<Meter> meter =meterRepository.findById(mId);
-        if(meter.isEmpty()){
+    public Meter getMeterById(final Long meterId) throws IdNotFoundException {
+        Optional<Meter> meter = meterRepository.findById(meterId);
+        if (meter.isEmpty()) {
             log.info("Invalid Meter Id");
-            throw new IdNotFoundException("No meter found for meter id : "+ mId +". \n Please check the meter ID.");
+            throw new IdNotFoundException("No meter found for meter id : " + meterId + ". \n Please check the meter ID.");
         }
         log.info("Meter found.");
         return meter.get();
@@ -61,10 +61,10 @@ public class MeterServiceIm implements MeterService{
      */
     @Override
     public Meter addMeter(final Meter meter) throws ResourceNotFoundException {
-        if(meter.getMLoad()== null){
+        if (meter.getMeterLoad() == null) {
             log.info("Meter Load Value is missing");
             throw new ResourceNotFoundException("Please enter the value for Meter Load.");
-        }else if(meter.getMinBillAmount()== null){
+        } else if (meter.getMinBillAmount() == null) {
             log.info("Minimum Bill Amount is missing");
             throw new ResourceNotFoundException("Please enter the Minimum Bill Amount.");
         }
@@ -75,36 +75,38 @@ public class MeterServiceIm implements MeterService{
 
     /**
      * to Update Meter Details
-     * @param mId - Meter's ID
-     * @param meter - Meter's Details
+     *
+     * @param meterId - Meter's ID
+     * @param meter   - Meter's Details
      * @return Meter's Details
      */
     @Override
-    public Meter updateMeter(final Long mId , final Meter meter) throws IdNotFoundException{
-        Optional<Meter> meterOptional = meterRepository.findById(mId);
-        if(meterOptional.isEmpty()){
+    public Meter updateMeter(final Long meterId, final Meter meter) throws IdNotFoundException {
+        Optional<Meter> meterOptional = meterRepository.findById(meterId);
+        if (meterOptional.isEmpty()) {
             log.info("Invalid Meter ID");
-            throw new IdNotFoundException("Customer with " +mId+ " ID not found");
+            throw new IdNotFoundException("Customer with " + meterId + " ID not found");
         }
         Meter existingMeter = meterOptional.get();
-        existingMeter.setMLoad(meter.getMLoad()== null ? existingMeter.getMLoad() : meter.getMLoad());
-        existingMeter.setMinBillAmount(meter.getMinBillAmount()== null ? existingMeter.getMinBillAmount() : meter.getMinBillAmount());
+        existingMeter.setMeterLoad(meter.getMeterLoad() == null ? existingMeter.getMeterLoad() : meter.getMeterLoad());
+        existingMeter.setMinBillAmount(meter.getMinBillAmount() == null ? existingMeter.getMinBillAmount() : meter.getMinBillAmount());
         log.info("Meter has been updated.");
         return meterRepository.save(existingMeter);
     }
 
     /**
      * to Delete a Meter
-     * @param mId - Meter's ID
+     *
+     * @param meterId - Meter's ID
      */
     @Override
-    public void deleteMeter(final Long mId) throws IdNotFoundException{
-        Optional<Meter> meter = meterRepository.findById(mId);
-        if(meter.isEmpty()){
+    public void deleteMeter(final Long meterId) throws IdNotFoundException {
+        Optional<Meter> meter = meterRepository.findById(meterId);
+        if (meter.isEmpty()) {
             log.info("Invalid Meter ID");
-            throw new IdNotFoundException("Meter not found with id- " + mId );
+            throw new IdNotFoundException("Meter not found with id- " + meterId);
         }
         log.info("Meter has been Deleted");
-        meterRepository.deleteById(mId);
+        meterRepository.deleteById(meterId);
     }
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customer_tbl")
+@Table(name = "customer")
 public class Customer {
 
     /**
@@ -23,13 +23,13 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    private Long cId;
+    private Long customerId;
 
     @Column(name = "customer_name")
-    private String cName;
+    private String customerName;
 
     @Column(name = "customer_address")
-    private String cAddress;
+    private String customerAddress;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     @CreationTimestamp
@@ -40,7 +40,7 @@ public class Customer {
     private Long lastReading;
 
     @Column(name = "current_reading")
-    private Long currReading;
+    private Long currentReading;
 
     @Column(name = "bill_amount")
     private Double billAmount;

@@ -39,17 +39,18 @@ public class SupplierServiceIm implements SupplierService{
 
     /**
      * to get Details of Supplier with Supplier's ID
-     * @param sId - Supplier's ID
+     *
+     * @param supplierId - Supplier's ID
      * @return Supplier's Details
      */
     @Override
-    public Supplier getSupplierById(final Long sId) throws IdNotFoundException{
-        Optional<Supplier> supplier = supplierRepository.findById(sId);
-        if(supplier.isEmpty()){
+    public Supplier getSupplierById(final Long supplierId) throws IdNotFoundException {
+        Optional<Supplier> supplier = supplierRepository.findById(supplierId);
+        if (supplier.isEmpty()) {
             log.info("Invalid Supplier Id");
-            throw new IdNotFoundException("Supplier "+ sId +" not found");
+            throw new IdNotFoundException("Supplier " + supplierId + " not found");
         }
-        log.info("Supplier found with id- " +sId);
+        log.info("Supplier found with id- " + supplier);
         return supplier.get();
     }
 
@@ -60,10 +61,10 @@ public class SupplierServiceIm implements SupplierService{
      */
     @Override
     public Supplier addSupplier(final Supplier supplier) throws ResourceNotFoundException{
-        if(supplier.getSName() == null){
+        if (supplier.getSupplierName() == null) {
             log.info("Supplier name is missing");
             throw new ResourceNotFoundException("Please enter valid Supplier name.");
-        }else if(supplier.getSArea()== null){
+        } else if (supplier.getSupplierArea() == null) {
             log.info("Missing Supplier Area");
             throw new ResourceNotFoundException("Please enter Supplier Area.");
         }
@@ -73,37 +74,39 @@ public class SupplierServiceIm implements SupplierService{
 
     /**
      * to Update Supplier Details
-     * @param sId - Supplier's ID
-     * @param supplier - Supplier's Details
+     *
+     * @param supplierId - Supplier's ID
+     * @param supplier   - Supplier's Details
      * @return Supplier's Details
      */
     @Override
-    public Supplier updateSupplierDetails(final Long sId , final Supplier supplier) throws IdNotFoundException{
-        Optional<Supplier> supplierOptional = supplierRepository.findById(sId);
-        if(supplierOptional.isEmpty()){
+    public Supplier updateSupplierDetails(final Long supplierId, final Supplier supplier) throws IdNotFoundException {
+        Optional<Supplier> supplierOptional = supplierRepository.findById(supplierId);
+        if (supplierOptional.isEmpty()) {
             log.info("Invalid Supplier ID");
-            throw new IdNotFoundException("Supplier Not found for id-"+ sId + ". Please enter a valid supplier ID");
+            throw new IdNotFoundException("Supplier Not found for id-" + supplierId + ". Please enter a valid supplier ID");
         }
         log.info("Supplier Found, updating the details");
         Supplier existingSupplier = supplierOptional.get();
-        existingSupplier.setSName(supplier.getSName() == null ? existingSupplier.getSName() : supplier.getSName());
-        existingSupplier.setSArea(supplier.getSArea() == null ? existingSupplier.getSArea() : supplier.getSArea());
+        existingSupplier.setSupplierName(supplier.getSupplierName() == null ? existingSupplier.getSupplierName() : supplier.getSupplierName());
+        existingSupplier.setSupplierArea(supplier.getSupplierArea() == null ? existingSupplier.getSupplierArea() : supplier.getSupplierArea());
         log.info("Supplier data is updated");
         return supplierRepository.save(existingSupplier);
     }
 
     /**
      * to Delete a Supplier
-     * @param sId -Supplier's ID
+     *
+     * @param supplierId -Supplier's ID
      */
     @Override
-    public void deleteSupplier(final Long sId) throws IdNotFoundException{
-        Optional<Supplier> supplierOptional = supplierRepository.findById(sId);
-        if(supplierOptional.isEmpty()){
+    public void deleteSupplier(final Long supplierId) throws IdNotFoundException {
+        Optional<Supplier> supplierOptional = supplierRepository.findById(supplierId);
+        if (supplierOptional.isEmpty()) {
             log.info("Invalid Supplier ID");
-            throw new IdNotFoundException("Supplier with id-" + sId + " not found");
+            throw new IdNotFoundException("Supplier with id-" + supplierId + " not found");
         }
-        log.info("customer with ID-" + sId  + " is deleted");
-        supplierRepository.deleteById(sId);
+        log.info("customer with ID-" + supplierId + " is deleted");
+        supplierRepository.deleteById(supplierId);
     }
 }

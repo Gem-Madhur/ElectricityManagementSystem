@@ -22,9 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = AutoConfigureMockMvc.class)
 @WebMvcTest(SupplierService.class)
@@ -62,8 +60,8 @@ public class SupplierServiceTest {
     public void getSupplierByIdTest() throws IdNotFoundException {
         Supplier supplier = new Supplier(1100L, "Tata", "Urban");
         when(supplierRepository.findById(anyLong())).thenReturn(Optional.of(supplier));
-        assertEquals(1100, supplierService.getSupplierById(1100L).getSId());
-        assertEquals("Tata", supplierService.getSupplierById(1100L).getSName());
+        assertEquals(1100, supplierService.getSupplierById(1100L).getSupplierId());
+        assertEquals("Tata", supplierService.getSupplierById(1100L).getSupplierName());
         verify(supplierRepository, times(2)).findById(1100L);
     }
 
@@ -91,10 +89,10 @@ public class SupplierServiceTest {
         Supplier supplier = new Supplier(1100L, "Tata", "Urban");
         when(supplierRepository.findById(anyLong())).thenReturn(Optional.of(supplier));
         when(supplierRepository.save(any(Supplier.class))).thenReturn(supplier);
-        supplier.setSName("Tata");
-        Supplier existingSupplier = supplierService.updateSupplierDetails(supplier.getSId(), supplier);
+        supplier.setSupplierName("Tata");
+        Supplier existingSupplier = supplierService.updateSupplierDetails(supplier.getSupplierId(), supplier);
         assertNotNull(existingSupplier);
-        assertEquals("Tata", supplier.getSName());
+        assertEquals("Tata", supplier.getSupplierName());
         verify(supplierRepository).findById(1100L);
         verify(supplierRepository).save(supplier);
     }

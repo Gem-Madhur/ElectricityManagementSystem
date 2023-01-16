@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "meter_tbl")
+@Table(name = "meter")
 
 public class Meter {
 
@@ -19,10 +19,10 @@ public class Meter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meter_id")
-    private Long mId;
+    private Long meterId;
 
     @Column(name = "meter_load")
-    private Float mLoad;
+    private Float meterLoad;
 
     @Column(name = "min_bill_amount")
     private Float minBillAmount;

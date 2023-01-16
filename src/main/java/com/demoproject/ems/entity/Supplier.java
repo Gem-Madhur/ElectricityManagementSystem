@@ -1,13 +1,15 @@
 package com.demoproject.ems.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "supplier_tbl")
+@Table(name = "supplier")
 
 public class Supplier {
 
@@ -17,12 +19,12 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "supplier_id")
-    private Long sId;
+    private Long supplierId;
 
 
     @Column(name = "supplier_name")
-    private String sName;
+    private String supplierName;
 
     @Column(name = "supplier_area")
-    private String sArea;
+    private String supplierArea;
 }

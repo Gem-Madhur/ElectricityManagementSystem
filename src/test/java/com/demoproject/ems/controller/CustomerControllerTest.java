@@ -23,14 +23,8 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -80,7 +74,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.cAddress", is(customer1.getCAddress())))
                 .andExpect(jsonPath("$.connectionDate", is(customer1.getConnectionDate())))
                 .andExpect(jsonPath("$.lastReading", is(customer1.getLastReading().intValue())))
-                .andExpect(jsonPath("$.currtReading", is(customer1.getCurrReading().intValue())))
+                .andExpect(jsonPath("$.currReading", is(customer1.getCurrReading().intValue())))
                 .andExpect(jsonPath("$.billAmount", is(customer1.getBillAmount())))
                 .andExpect(jsonPath("$.meter", is(customer1.getMeter())))
                 .andExpect(jsonPath("$.supplier", is(customer1.getSupplier())));

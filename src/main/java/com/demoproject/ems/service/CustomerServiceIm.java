@@ -8,7 +8,6 @@ import com.demoproject.ems.exception.IdNotFoundException;
 import com.demoproject.ems.exception.InvalidReadingException;
 import com.demoproject.ems.exception.ResourceNotFoundException;
 import com.demoproject.ems.repository.CustomerRepository;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,17 +42,18 @@ public class CustomerServiceIm implements CustomerService {
 
     /**
      * To get Details of Customer with Customer's ID
-     * @param cId - Customer's ID
+     *
+     * @param customerId - Customer's ID
      * @return Customer Details
      */
     @Override
-    public Customer getCustomerById(final Long cId) throws IdNotFoundException{
-        Optional<Customer> customer = customerRepository.findById(cId);
-        if(customer.isEmpty()){
+    public Customer getCustomerById(final Long customerId) throws IdNotFoundException {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isEmpty()) {
             log.info("Invalid Customer Id");
-            throw new IdNotFoundException("Customer "+cId+" not found");
+            throw new IdNotFoundException("Customer " + customerId + " not found");
         }
-        log.info("Customer found with id-" +cId);
+        log.info("Customer found with id-" + customer);
         return customer.get();
     }
 
@@ -66,32 +66,28 @@ public class CustomerServiceIm implements CustomerService {
     public Customer addCustomer(final Customer customer) throws ResourceNotFoundException{
         Optional<Meter> meterOptional = Optional.ofNullable(customer.getMeter());
         Optional<Supplier> supplierOptional = Optional.ofNullable(customer.getSupplier());
-        if(customer.getCName()==null){
+        if (customer.getCustomerName() == null) {
             log.info("Customer Name is missing");
             throw new ResourceNotFoundException("Please enter valid Customer Name");
-        } else if(customer.getCAddress()==null){
+        } else if (customer.getCustomerAddress() == null) {
             log.info("Customer Address is missing");
             throw new ResourceNotFoundException("Please enter valid Customer Address");
-        }
-        else if(customer.getConnectionDate()==null){
+        } else if (customer.getConnectionDate() == null) {
             log.info("Connection Date is missing");
             throw new ResourceNotFoundException("Please enter a valid Connection Date");
-        }
-        else if(customer.getLastReading()==null){
+        } else if (customer.getLastReading() == null) {
             log.info("Last Reading is missing");
-            throw  new ResourceNotFoundException("Please enter a valid Last Reading");
-        }
-        else if(customer.getCurrReading()==null){
+            throw new ResourceNotFoundException("Please enter a valid Last Reading");
+        } else if (customer.getCurrentReading() == null) {
             log.info("Current Reading is missing");
             throw new ResourceNotFoundException("Please enter a valid Current Reading");
-        }
-        else if(meterOptional.isEmpty() && supplierOptional.isEmpty()){
+        } else if (meterOptional.isEmpty() && supplierOptional.isEmpty()) {
             log.info("Invalid or Details are Missing");
             throw new ResourceNotFoundException("Please enter valid Meter and Supplier details");
-        }else if(supplierOptional.isEmpty()){
+        } else if (supplierOptional.isEmpty()) {
             log.info("invalid or Supplier Details are Missing");
             throw new ResourceNotFoundException("please enter valid Supplier Details");
-        }else if(meterOptional.isEmpty()){
+        } else if (meterOptional.isEmpty()){
             log.info("Invalid or Meter Details are missing");
             throw new ResourceNotFoundException("Please enter valid Meter Details");
         }
@@ -102,41 +98,43 @@ public class CustomerServiceIm implements CustomerService {
 
     /**
      * to Delete a Customer
-     * @param cId - Customer's ID
+     *
+     * @param customerId - Customer's ID
      */
     @Override
-    public void deleteCustomer(final Long cId) throws IdNotFoundException{
-        Optional<Customer> customerOptional = customerRepository.findById(cId);
-        if(customerOptional.isEmpty()) {
+    public void deleteCustomer(final Long customerId) throws IdNotFoundException {
+        Optional<Customer> customerOptional = customerRepository.findById(customerId);
+        if (customerOptional.isEmpty()) {
             log.info("invalid Customer ID");
-            throw new IdNotFoundException("Customer not found with id-" + cId);
+            throw new IdNotFoundException("Customer not found with id-" + customerId);
         }
-        log.info("Customer with ID: " + cId + " is deleted");
-        customerRepository.deleteById(cId);
+        log.info("Customer with ID: " + customerId + " is deleted");
+        customerRepository.deleteById(customerId);
     }
 
     /**
      * to Update Customer Details
-     * @param cId - Customer's ID
-     * @param customer - Customer's details
+     *
+     * @param customerId - Customer's ID
+     * @param customer   - Customer's details
      * @return Customer's Details
      */
     @Override
-    public Customer updateCustomerById(final Long cId,final Customer customer) throws Exception{
-        Optional<Customer> customerOptional = customerRepository.findById(cId);
-        if(customerOptional.isEmpty()){
+    public Customer updateCustomerById(final Long customerId, final Customer customer) throws Exception {
+        Optional<Customer> customerOptional = customerRepository.findById(customerId);
+        if (customerOptional.isEmpty()) {
             log.info("Invalid Customer Id");
-            throw new IdNotFoundException("Customer with id- " + cId+ "not found");
+            throw new IdNotFoundException("Customer with id- " + customerId + "not found");
         }
         log.info("Customer found , updating the details");
         Customer existingCustomer = customerOptional.get();
-        existingCustomer.setCName(customer.getCName()== null ? existingCustomer.getCName() : customer.getCName());
-        existingCustomer.setCAddress(customer.getCAddress()== null ? existingCustomer.getCAddress() : customer.getCAddress());
-        existingCustomer.setLastReading(customer.getLastReading()== null ? existingCustomer.getLastReading() : customer.getLastReading());
-        existingCustomer.setMeter(customer.getMeter()== null ? existingCustomer.getMeter() : customer.getMeter());
-        existingCustomer.setSupplier(customer.getSupplier()== null ? existingCustomer.getSupplier() : customer.getSupplier());
-        if(existingCustomer.getCurrReading()!= null){
-            updateCurrentReading(existingCustomer.getCId(),existingCustomer.getCurrReading());
+        existingCustomer.setCustomerName(customer.getCustomerName() == null ? existingCustomer.getCustomerName() : customer.getCustomerName());
+        existingCustomer.setCustomerAddress(customer.getCustomerAddress() == null ? existingCustomer.getCustomerAddress() : customer.getCustomerAddress());
+        existingCustomer.setLastReading(customer.getLastReading() == null ? existingCustomer.getLastReading() : customer.getLastReading());
+        existingCustomer.setMeter(customer.getMeter() == null ? existingCustomer.getMeter() : customer.getMeter());
+        existingCustomer.setSupplier(customer.getSupplier() == null ? existingCustomer.getSupplier() : customer.getSupplier());
+        if (existingCustomer.getCurrentReading() != null) {
+            updateCurrentReading(existingCustomer.getCustomerId(), existingCustomer.getCurrentReading());
         }
         log.info("Customer data is updated");
         return customerRepository.save(existingCustomer);
@@ -144,46 +142,45 @@ public class CustomerServiceIm implements CustomerService {
 
     /**
      * to Update Current reading in a bill and to get the Bill Amount
-     * @param cId Customer's ID
+     *
+     * @param customerId  Customer's ID
      * @param currReading - current reading of the bill
      * @return Customer's Details
      */
     @Override
-    public Customer updateCurrentReading(final Long cId , final Long currReading) throws Exception{
-        Optional<Customer> customerOptional = customerRepository.findById(cId);
-        if(customerOptional.isEmpty()){
+    public Customer updateCurrentReading(final Long customerId, final Long currReading) throws Exception {
+        Optional<Customer> customerOptional = customerRepository.findById(customerId);
+        if (customerOptional.isEmpty()) {
             log.info("Invalid Customer Id");
-            throw new IdNotFoundException("Customer with id- " + cId+ "Not found");
+            throw new IdNotFoundException("Customer with id- " + customerId + "Not found");
         }
         Customer customer = customerOptional.get();
-        if(customer.getCurrReading()>currReading){
+        if (customer.getCurrentReading() > currReading) {
             log.info("Invalid Current Reading");
             throw new InvalidReadingException("Please enter a valid current reading as current reading"
-                    +" cannot be less than last reading");
+                    + " cannot be less than last reading");
         }
         log.info("Updating last and current reading");
-        customer.setLastReading(customer.getCurrReading());
-        customer.setCurrReading(currReading);
+        customer.setLastReading(customer.getCurrentReading());
+        customer.setCurrentReading(currReading);
         log.info("Last and current readings are updated");
         double billAmount = 0d;
-        long netUnitConsumed = customer.getCurrReading()- customer.getLastReading();
-        if(netUnitConsumed<100){
-            billAmount = 100*3;
+        long netUnitConsumed = customer.getCurrentReading() - customer.getLastReading();
+        if (netUnitConsumed < 100) {
+            billAmount = 100 * 3;
+        } else if (netUnitConsumed < 200) {
+            billAmount = 100 * 3 + (netUnitConsumed - 100) * 5;
+        } else if(netUnitConsumed < 300) {
+            billAmount = 100 * 3 + 100*5 + (netUnitConsumed-200)*6;
         }
-        else if(netUnitConsumed<200){
-            billAmount = 100*3 + (netUnitConsumed-100)*5;
+        else if(netUnitConsumed < 400) {
+            billAmount = 100 * 3 + 100 * 5 + 100*6 +(netUnitConsumed-300)*7;
         }
-        else if(netUnitConsumed<300){
-            billAmount = 100*3 + 200*5 + (netUnitConsumed-200)*6;
+        else if(netUnitConsumed < 500) {
+            billAmount = 100 * 3 + 100 * 5 + 100 * 6 + 100*7+ (netUnitConsumed-400)*7.5;
         }
-        else if(netUnitConsumed<400){
-            billAmount = 100*3 + 200*5 + 300*6 +(netUnitConsumed-300)*7;
-        }
-        else if(netUnitConsumed<500){
-            billAmount = 100*3 + 200*5 + 300*6 + 400*7+ (netUnitConsumed-400)*7.5;
-        }
-        else if(netUnitConsumed>500){
-            billAmount = 100*3 + 200*5 + 300*6 + 400*7+ 500*7.5 + (netUnitConsumed-500)*8;
+        else if(netUnitConsumed > 500) {
+            billAmount = 100 * 3 + 100 * 5 + 100 * 6 + 100 * 7 + 100*7.5 + (netUnitConsumed-500)*8;
         }
         double finalBillAmount = billAmount>= customer.getMeter().getMinBillAmount()? billAmount : customer.getMeter().getMinBillAmount();
         customer.setBillAmount(finalBillAmount);

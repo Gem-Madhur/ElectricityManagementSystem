@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping(path = "/customers")
 public class CustomerController {
 
     /**
@@ -26,19 +26,20 @@ public class CustomerController {
      * To get List of all Customers
      * @return ResponseEntity
      */
-    @GetMapping(path = "/customers",produces = "application/json")
+    @GetMapping(produces = "application/json")
     public ResponseEntity<List<Customer>> getCustomers() throws DataNotFoundException{
     return new ResponseEntity<>(customerServiceIm.getCustomers(), HttpStatus.OK);
     }
 
     /**
      * To get Details of Customer with Customer's ID
-     * @param cId - Customer's ID
+     *
+     * @param customerId - Customer's ID
      * @return ResponseEntity
      */
-    @GetMapping(path = "/customerById/{cId}",produces = "application/json")
-    public ResponseEntity<Customer>getCustomerById(@PathVariable final Long cId) throws IdNotFoundException {
-        return new ResponseEntity<>(customerServiceIm.getCustomerById(cId), HttpStatus.OK);
+    @GetMapping(path = "/customerById/{cId}", produces = "application/json")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable final Long customerId) throws IdNotFoundException {
+        return new ResponseEntity<>(customerServiceIm.getCustomerById(customerId), HttpStatus.OK);
     }
 
     /**
@@ -53,35 +54,40 @@ public class CustomerController {
 
     /**
      * to Delete a Customer
-     * @param cId - Customer's ID
+     *
+     * @param customerId - Customer's ID
      * @return ResponseEntity
      */
-    @DeleteMapping(path = "/customers/delete/{cId}")
-    public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable final Long cId) throws IdNotFoundException{
-        customerServiceIm.deleteCustomer(cId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping(path = "/delete/{cId}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable final Long customerId) throws IdNotFoundException {
+        customerServiceIm.deleteCustomer(customerId);
+        return new ResponseEntity<>("Customer Deleted", HttpStatus.OK);
     }
 
     /**
      * to Update Customer Details
-     * @param cId - Customer's ID
-     * @param customer - Customer's details
+     *
+     * @param customerId - Customer's ID
+     * @param customer   - Customer's details
      * @return ResponseEntity
      */
-    @PutMapping(path = "/customers/update/{cId}" , produces = "application/json",consumes = "application/json")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable final Long cId,@RequestBody final Customer customer)throws Exception{
-        return new ResponseEntity<>(customerServiceIm.updateCustomerById(cId,customer),HttpStatus.OK);
+    @PutMapping(path = "/update/{cId}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable final Long customerId, @RequestBody final Customer customer) throws Exception {
+        return new ResponseEntity<>(customerServiceIm.updateCustomerById(customerId, customer), HttpStatus.OK);
     }
 
-    /**]
+    /**
+     * ]
      * to Update Current reading in a bill and to get the Bill Amount
-     * @param cId Customer's ID
+     *
+     * @param customerId  Customer's ID
      * @param currReading - current reading of the bill
      * @return ResponseEntity
-=     */
+     * =
+     */
     @PutMapping(produces = "application/json")
-    public ResponseEntity<Customer> updateCurrentReading(@RequestParam final Long cId ,@RequestParam final Long currReading) throws Exception{
-        Customer customer = customerServiceIm.updateCurrentReading(cId,currReading);
+    public ResponseEntity<Customer> updateCurrentReading(@RequestParam final Long customerId, @RequestParam final Long currReading) throws Exception {
+        Customer customer = customerServiceIm.updateCurrentReading(customerId, currReading);
         return new ResponseEntity<>(customer,HttpStatus.OK);
     }
 

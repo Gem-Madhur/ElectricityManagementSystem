@@ -3,7 +3,6 @@ package com.demoproject.ems.controller;
 import com.demoproject.ems.entity.Meter;
 import com.demoproject.ems.service.MeterServiceIm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,19 +14,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,7 +65,7 @@ public class MeterControllerTest {
         when(meterService.getMeterById(anyLong())).thenReturn(meter1);
         this.mockMvc.perform(get("/meterById/{meterId}", 1010L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mLoad", is(meter1.getMLoad())))
+                .andExpect(jsonPath("$.mLoad", is(meter1.getMeterLoad())))
                 .andExpect(jsonPath("$.minBillAmount", is(meter1.getMinBillAmount())));
         verify(meterService).getMeterById(1010L);
     }
@@ -83,7 +78,7 @@ public class MeterControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(meter)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.mLoad", is(meter.getMLoad())))
+                .andExpect(jsonPath("$.mLoad", is(meter.getMeterLoad())))
                 .andExpect(jsonPath("$.minBillAmount", is(meter.getMinBillAmount())));
         verify(meterService).addMeter(meter);
     }
@@ -96,7 +91,7 @@ public class MeterControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(meter)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mLoad", is(meter.getMLoad())))
+                .andExpect(jsonPath("$.mLoad", is(meter.getMeterLoad())))
                 .andExpect(jsonPath("$.minBillAmount", is(meter.getMinBillAmount())));
         verify(meterService).updateMeter(1L, meter);
     }

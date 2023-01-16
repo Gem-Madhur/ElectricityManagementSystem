@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping(path = "/meters")
 public class MeterController {
 
     /**
@@ -26,19 +26,20 @@ public class MeterController {
      * to get List of all Meters
      * @return ResponseEntity
      */
-    @GetMapping(path = "/meters",produces = "application/json")
+    @GetMapping(produces = "application/json")
     public ResponseEntity<List<Meter>> getMeters() throws DataNotFoundException{
         return new ResponseEntity<>(meterServiceIm.getMeters(), HttpStatus.OK);
     }
 
     /**
      * to get Meters details with Meter's ID
-     * @param mId - Meter's ID
+     *
+     * @param meterId - Meter's ID
      * @return ResponseEntity
      */
-    @GetMapping(path = "/meter/{mId}",produces = "application/json")
-    public ResponseEntity<Meter> getMeterById(@PathVariable final Long mId) throws IdNotFoundException{
-        return new ResponseEntity<>(meterServiceIm.getMeterById(mId),HttpStatus.OK);
+    @GetMapping(path = "/{mId}", produces = "application/json")
+    public ResponseEntity<Meter> getMeterById(@PathVariable final Long meterId) throws IdNotFoundException {
+        return new ResponseEntity<>(meterServiceIm.getMeterById(meterId), HttpStatus.OK);
     }
 
     /**
@@ -53,23 +54,25 @@ public class MeterController {
 
     /**
      * to Update Meter Details
-     * @param mId - Meter's ID
-     * @param meter - Meter's Details
+     *
+     * @param meterId - Meter's ID
+     * @param meter   - Meter's Details
      * @return ResponseEntity
      */
-    @PutMapping(path = "/meters/update/{mId}")
-    public ResponseEntity<Meter> updateMeter(@PathVariable final Long mId,@RequestBody final Meter meter) throws IdNotFoundException{
-        return new ResponseEntity<>(meterServiceIm.updateMeter(mId,meter),HttpStatus.OK);
+    @PutMapping(path = "/update/{mId}")
+    public ResponseEntity<Meter> updateMeter(@PathVariable final Long meterId, @RequestBody final Meter meter) throws IdNotFoundException {
+        return new ResponseEntity<>(meterServiceIm.updateMeter(meterId, meter), HttpStatus.OK);
     }
 
     /**
      * to Delete a Meter
-     * @param mId - Meter's ID
+     *
+     * @param meterId - Meter's ID
      * @return ResponseEntity
      */
-    @DeleteMapping(path = "/meters/delete/{mId}")
-    public ResponseEntity<HttpStatus> deleteMeter(@PathVariable final Long mId) throws IdNotFoundException{
-        meterServiceIm.deleteMeter(mId);
+    @DeleteMapping(path = "/delete/{mId}")
+    public ResponseEntity<HttpStatus> deleteMeter(@PathVariable final Long meterId) throws IdNotFoundException {
+        meterServiceIm.deleteMeter(meterId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

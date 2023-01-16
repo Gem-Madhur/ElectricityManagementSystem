@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(path = "/suppliers")
 public class SupplierController {
 
     /**
@@ -25,19 +26,20 @@ public class SupplierController {
      * to get List of all Suppliers
      * @return ResponseEntity
      */
-    @GetMapping(path = "/suppliers" , produces = "application/json")
+    @GetMapping(produces = "application/json")
     public ResponseEntity<List<Supplier>> getSuppliers() throws DataNotFoundException{
         return new ResponseEntity<>(supplierServiceIm.getSuppliers(), HttpStatus.OK);
     }
 
     /**
      * to get Details of Supplier with Supplier's ID
-     * @param sId - Supplier's ID
+     *
+     * @param supplierId - Supplier's ID
      * @return ResponseEntity
      */
-    @GetMapping(path = "/supplierById/{sId}" , produces = "application/json")
-    public ResponseEntity<Supplier> getSupplierById(@PathVariable final Long sId) throws IdNotFoundException{
-        return new ResponseEntity<>(supplierServiceIm.getSupplierById(sId),HttpStatus.OK);
+    @GetMapping(path = "/supplierById/{sId}", produces = "application/json")
+    public ResponseEntity<Supplier> getSupplierById(@PathVariable final Long supplierId) throws IdNotFoundException {
+        return new ResponseEntity<>(supplierServiceIm.getSupplierById(supplierId), HttpStatus.OK);
     }
 
     /**
@@ -52,23 +54,25 @@ public class SupplierController {
 
     /**
      * to Update Supplier Details
-     * @param sId - Supplier's ID
-     * @param supplier - Supplier's Details
+     *
+     * @param supplierId - Supplier's ID
+     * @param supplier   - Supplier's Details
      * @return ResponseEntity
      */
-    @PutMapping(path = "/suppliers/update/{sId}",produces = "application/json",consumes = "application/json")
-    public ResponseEntity<Supplier> updateSupplierDetails(@PathVariable final Long sId ,@RequestBody final Supplier supplier) throws IdNotFoundException{
-        return new ResponseEntity<>(supplierServiceIm.updateSupplierDetails(sId,supplier),HttpStatus.OK);
+    @PutMapping(path = "/update/{sId}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Supplier> updateSupplierDetails(@PathVariable final Long supplierId, @RequestBody final Supplier supplier) throws IdNotFoundException {
+        return new ResponseEntity<>(supplierServiceIm.updateSupplierDetails(supplierId, supplier), HttpStatus.OK);
     }
 
     /**
      * to Delete a Supplier
-     * @param sId -Supplier's ID
+     *
+     * @param supplierId -Supplier's ID
      * @return ResponseEntity
      */
     @DeleteMapping(path = "/suppliers/delete/{sId}")
-    public  ResponseEntity<HttpStatus> deleteSupplier(@PathVariable final Long sId) throws IdNotFoundException{
-        supplierServiceIm.deleteSupplier(sId);
+    public ResponseEntity<HttpStatus> deleteSupplier(@PathVariable final Long supplierId) throws IdNotFoundException {
+        supplierServiceIm.deleteSupplier(supplierId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

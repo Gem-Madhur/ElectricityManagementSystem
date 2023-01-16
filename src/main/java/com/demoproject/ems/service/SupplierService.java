@@ -10,11 +10,11 @@ import java.util.List;
 public interface SupplierService {
     List<Supplier> getSuppliers() throws ResourceNotFoundException , DataNotFoundException;
 
-    Supplier getSupplierById(Long sId) throws IdNotFoundException;
+    Supplier getSupplierById(Long supplierId) throws IdNotFoundException;
 
     Supplier addSupplier(Supplier supplier) throws ResourceNotFoundException;
 
-    Supplier updateSupplierDetails(Long sId , Supplier supplier) throws IdNotFoundException;
+    Supplier updateSupplierDetails(Long supplierId, Supplier supplier) throws IdNotFoundException;
 
-    void deleteSupplier(Long sId) throws IdNotFoundException;
+    void deleteSupplier(Long supplierId) throws IdNotFoundException;
 }

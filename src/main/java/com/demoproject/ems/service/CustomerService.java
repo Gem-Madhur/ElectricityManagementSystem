@@ -10,13 +10,13 @@ import java.util.List;
 public interface CustomerService {
     List<Customer> getCustomers () throws DataNotFoundException;
 
-    Customer getCustomerById(Long cId) throws IdNotFoundException;
+    Customer getCustomerById(Long customerId) throws IdNotFoundException;
 
     Customer addCustomer(Customer customer) throws ResourceNotFoundException;
 
-    void deleteCustomer(Long cId) throws IdNotFoundException;
+    void deleteCustomer(Long customerId) throws IdNotFoundException;
 
-    Customer updateCustomerById(Long cId, Customer customer) throws Exception;
+    Customer updateCustomerById(Long customerId, Customer customer) throws Exception;
 
-    Customer updateCurrentReading(Long cId, Long currReading) throws Exception;
+    Customer updateCurrentReading(Long customerId, Long currReading) throws Exception;
 }

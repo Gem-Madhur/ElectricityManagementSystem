@@ -21,13 +21,8 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -72,8 +67,8 @@ public class SupplierControllerTest {
         when(supplierService.getSupplierById(anyLong())).thenReturn(supplier1);
         this.mockMvc.perform(get("/supplier/{sId}", 1100L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.sName", is(supplier1.getSName())))
-                .andExpect(jsonPath("$.sArea", is(supplier1.getSArea())));
+                .andExpect(jsonPath("$.sName", is(supplier1.getSupplierName())))
+                .andExpect(jsonPath("$.sArea", is(supplier1.getSupplierArea())));
         verify(supplierService).getSupplierById(1100L);
     }
 
@@ -85,8 +80,8 @@ public class SupplierControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(supplier1)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.sName", is(supplier1.getSName())))
-                .andExpect(jsonPath("$.sArea", is(supplier1.getSArea())));
+                .andExpect(jsonPath("$.sName", is(supplier1.getSupplierName())))
+                .andExpect(jsonPath("$.sArea", is(supplier1.getSupplierArea())));
         verify(supplierService).addSupplier(supplier1);
     }
 
@@ -98,8 +93,8 @@ public class SupplierControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(supplier1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.sName", is(supplier1.getSName())))
-                .andExpect(jsonPath("$.sArea", is(supplier1.getSArea())));
+                .andExpect(jsonPath("$.sName", is(supplier1.getSupplierName())))
+                .andExpect(jsonPath("$.sArea", is(supplier1.getSupplierArea())));
         verify(supplierService).updateSupplierDetails(1100L, supplier1);
     }
 
