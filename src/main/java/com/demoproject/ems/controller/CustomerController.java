@@ -37,7 +37,7 @@ public class CustomerController {
      * @param customerId - Customer's ID
      * @return ResponseEntity
      */
-    @GetMapping(path = "/customerById/{cId}", produces = "application/json")
+    @GetMapping(path = "/customerById/{customerId}", produces = "application/json")
     public ResponseEntity<Customer> getCustomerById(@PathVariable final Long customerId) throws IdNotFoundException {
         return new ResponseEntity<>(customerServiceIm.getCustomerById(customerId), HttpStatus.OK);
     }
@@ -58,10 +58,10 @@ public class CustomerController {
      * @param customerId - Customer's ID
      * @return ResponseEntity
      */
-    @DeleteMapping(path = "/delete/{cId}")
+    @DeleteMapping(path = "/delete/{customerId}")
     public ResponseEntity<String> deleteCustomer(@PathVariable final Long customerId) throws IdNotFoundException {
         customerServiceIm.deleteCustomer(customerId);
-        return new ResponseEntity<>("Customer Deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Customer Deleted with ID- " + customerId, HttpStatus.OK);
     }
 
     /**
@@ -71,7 +71,7 @@ public class CustomerController {
      * @param customer   - Customer's details
      * @return ResponseEntity
      */
-    @PutMapping(path = "/update/{cId}", produces = "application/json", consumes = "application/json")
+    @PutMapping(path = "/update/{customerId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Customer> updateCustomer(@PathVariable final Long customerId, @RequestBody final Customer customer) throws Exception {
         return new ResponseEntity<>(customerServiceIm.updateCustomerById(customerId, customer), HttpStatus.OK);
     }

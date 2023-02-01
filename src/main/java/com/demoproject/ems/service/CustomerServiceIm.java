@@ -33,7 +33,7 @@ public class CustomerServiceIm implements CustomerService {
     public List<Customer> getCustomers() throws DataNotFoundException{
         List<Customer> customerList = customerRepository.findAll();
         if(customerList.size()== 0){
-            log.info("Customer List is Empty.");
+            log.info("List is Empty.");
             throw new DataNotFoundException("Please enter Customers in the list");
         }
         log.info(customerList.size() +" total customers found");
@@ -63,31 +63,21 @@ public class CustomerServiceIm implements CustomerService {
      * @return Customer's Details
      */
     @Override
-    public Customer addCustomer(final Customer customer) throws ResourceNotFoundException{
+    public Customer addCustomer(final Customer customer) throws ResourceNotFoundException {
         Optional<Meter> meterOptional = Optional.ofNullable(customer.getMeter());
         Optional<Supplier> supplierOptional = Optional.ofNullable(customer.getSupplier());
-        if (customer.getCustomerName() == null) {
-            log.info("Customer Name is missing");
-            throw new ResourceNotFoundException("Please enter valid Customer Name");
-        } else if (customer.getCustomerAddress() == null) {
-            log.info("Customer Address is missing");
-            throw new ResourceNotFoundException("Please enter valid Customer Address");
-        } else if (customer.getConnectionDate() == null) {
-            log.info("Connection Date is missing");
-            throw new ResourceNotFoundException("Please enter a valid Connection Date");
-        } else if (customer.getLastReading() == null) {
-            log.info("Last Reading is missing");
-            throw new ResourceNotFoundException("Please enter a valid Last Reading");
-        } else if (customer.getCurrentReading() == null) {
-            log.info("Current Reading is missing");
-            throw new ResourceNotFoundException("Please enter a valid Current Reading");
+        if (customer.getCustomerName() == null || customer.getCustomerAddress() == null ||
+                customer.getConnectionDate() == null || customer.getLastReading() == null ||
+                customer.getCurrentReading() == null) {
+            log.info("Customer Details is missing");
+            throw new ResourceNotFoundException("Please enter valid Customer Details");
         } else if (meterOptional.isEmpty() && supplierOptional.isEmpty()) {
             log.info("Invalid or Details are Missing");
             throw new ResourceNotFoundException("Please enter valid Meter and Supplier details");
         } else if (supplierOptional.isEmpty()) {
             log.info("invalid or Supplier Details are Missing");
             throw new ResourceNotFoundException("please enter valid Supplier Details");
-        } else if (meterOptional.isEmpty()){
+        } else if (meterOptional.isEmpty()) {
             log.info("Invalid or Meter Details are missing");
             throw new ResourceNotFoundException("Please enter valid Meter Details");
         }

@@ -70,11 +70,11 @@ public class CustomerControllerTest {
         when(customerService.getCustomerById(anyLong())).thenReturn(customer1);
         this.mockMvc.perform(get("/customerById/{cId}", 1L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cName", is(customer1.getCName())))
-                .andExpect(jsonPath("$.cAddress", is(customer1.getCAddress())))
+                .andExpect(jsonPath("$.cName", is(customer1.getCustomerName())))
+                .andExpect(jsonPath("$.cAddress", is(customer1.getCustomerAddress())))
                 .andExpect(jsonPath("$.connectionDate", is(customer1.getConnectionDate())))
                 .andExpect(jsonPath("$.lastReading", is(customer1.getLastReading().intValue())))
-                .andExpect(jsonPath("$.currReading", is(customer1.getCurrReading().intValue())))
+                .andExpect(jsonPath("$.currReading", is(customer1.getCurrentReading().intValue())))
                 .andExpect(jsonPath("$.billAmount", is(customer1.getBillAmount())))
                 .andExpect(jsonPath("$.meter", is(customer1.getMeter())))
                 .andExpect(jsonPath("$.supplier", is(customer1.getSupplier())));
@@ -90,8 +90,8 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer1)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.cName", is(customer1.getCName())))
-                .andExpect(jsonPath("$.cAddress", is(customer1.getCAddress())));
+                .andExpect(jsonPath("$.cName", is(customer1.getCustomerName())))
+                .andExpect(jsonPath("$.cAddress", is(customer1.getCustomerAddress())));
         verify(customerService).addCustomer(customer1);
     }
 
@@ -101,13 +101,13 @@ public class CustomerControllerTest {
     void updateCustomerByIdTest() throws Exception {
         Customer customer1 = new Customer(8L, "Madhur", "BW", null, 0L,
                 0L, 0d, null,null);
-        when(customerService.updateCustomerById(anyLong(),any(Customer.class))).thenReturn(customer1);
+        when(customerService.updateCustomerById(anyLong(), any(Customer.class))).thenReturn(customer1);
         this.mockMvc.perform(put("/customers/update/{cId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cName", is(customer1.getCName())))
-                .andExpect(jsonPath("$.cAddress", is(customer1.getCAddress())));
+                .andExpect(jsonPath("$.cName", is(customer1.getCustomerName())))
+                .andExpect(jsonPath("$.cAddress", is(customer1.getCustomerAddress())));
         verify(customerService).updateCustomerById(8L, customer1);
     }
 

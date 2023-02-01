@@ -33,7 +33,7 @@ public class Customer {
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     @CreationTimestamp
-    @Column(name = "c_date")
+    @Column(name = "connection_date")
     private Date connectionDate;
 
     @Column(name = "last_reading")

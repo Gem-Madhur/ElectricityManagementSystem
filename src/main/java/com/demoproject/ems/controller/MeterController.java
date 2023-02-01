@@ -37,7 +37,7 @@ public class MeterController {
      * @param meterId - Meter's ID
      * @return ResponseEntity
      */
-    @GetMapping(path = "/{mId}", produces = "application/json")
+    @GetMapping(path = "/meterById/{meterId}", produces = "application/json")
     public ResponseEntity<Meter> getMeterById(@PathVariable final Long meterId) throws IdNotFoundException {
         return new ResponseEntity<>(meterServiceIm.getMeterById(meterId), HttpStatus.OK);
     }
@@ -59,7 +59,7 @@ public class MeterController {
      * @param meter   - Meter's Details
      * @return ResponseEntity
      */
-    @PutMapping(path = "/update/{mId}")
+    @PutMapping(path = "/update/{meterId}")
     public ResponseEntity<Meter> updateMeter(@PathVariable final Long meterId, @RequestBody final Meter meter) throws IdNotFoundException {
         return new ResponseEntity<>(meterServiceIm.updateMeter(meterId, meter), HttpStatus.OK);
     }
@@ -70,9 +70,9 @@ public class MeterController {
      * @param meterId - Meter's ID
      * @return ResponseEntity
      */
-    @DeleteMapping(path = "/delete/{mId}")
-    public ResponseEntity<HttpStatus> deleteMeter(@PathVariable final Long meterId) throws IdNotFoundException {
+    @DeleteMapping(path = "/delete/{meterId}")
+    public ResponseEntity<String> deleteMeter(@PathVariable final Long meterId) throws IdNotFoundException {
         meterServiceIm.deleteMeter(meterId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Meter Deleted with ID- " + meterId, HttpStatus.OK);
     }
 }

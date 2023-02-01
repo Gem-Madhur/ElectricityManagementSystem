@@ -37,7 +37,7 @@ public class SupplierController {
      * @param supplierId - Supplier's ID
      * @return ResponseEntity
      */
-    @GetMapping(path = "/supplierById/{sId}", produces = "application/json")
+    @GetMapping(path = "/supplierById/{supplierId}", produces = "application/json")
     public ResponseEntity<Supplier> getSupplierById(@PathVariable final Long supplierId) throws IdNotFoundException {
         return new ResponseEntity<>(supplierServiceIm.getSupplierById(supplierId), HttpStatus.OK);
     }
@@ -59,7 +59,7 @@ public class SupplierController {
      * @param supplier   - Supplier's Details
      * @return ResponseEntity
      */
-    @PutMapping(path = "/update/{sId}", produces = "application/json", consumes = "application/json")
+    @PutMapping(path = "/update/{supplierId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Supplier> updateSupplierDetails(@PathVariable final Long supplierId, @RequestBody final Supplier supplier) throws IdNotFoundException {
         return new ResponseEntity<>(supplierServiceIm.updateSupplierDetails(supplierId, supplier), HttpStatus.OK);
     }
@@ -70,9 +70,9 @@ public class SupplierController {
      * @param supplierId -Supplier's ID
      * @return ResponseEntity
      */
-    @DeleteMapping(path = "/suppliers/delete/{sId}")
-    public ResponseEntity<HttpStatus> deleteSupplier(@PathVariable final Long supplierId) throws IdNotFoundException {
+    @DeleteMapping(path = "/delete/{supplierId}")
+    public ResponseEntity<String> deleteSupplier(@PathVariable final Long supplierId) throws IdNotFoundException {
         supplierServiceIm.deleteSupplier(supplierId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Supplier Deleted with ID- " + supplierId, HttpStatus.OK);
     }
 }

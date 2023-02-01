@@ -25,9 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = AutoConfigureMockMvc.class)
 @WebMvcTest(CustomerService.class)
@@ -67,7 +65,7 @@ public class CustomerServiceTest {
         Customer customer = new Customer(1L, "Madhur", "BW", new Date(), 0L,
                 0L, 0D, null, null);
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
-        assertEquals(1, customerService.getCustomerById(1L).getCId());
+        assertEquals(1, customerService.getCustomerById(1L).getCustomerId());
         verify(customerRepository).findById(1L);
     }
 
@@ -94,14 +92,14 @@ public class CustomerServiceTest {
     @Test
     public void updateCustomerTest() throws Exception {
         Customer customer1 = new Customer(1L, "Madhur", "BW", null, 0L,
-                0L, 0d, new Meter(1L,2F, 4000F ),
+                0L, 0d, new Meter(1L, 2F, 4000F),
                 new Supplier(2L, "Adani", "Rural"));
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer1));
         when(customerRepository.save(any(Customer.class))).thenReturn(customer1);
-        customer1.setCName("Aman");
-        Customer existingCustomer = customerService.updateCustomerById(customer1.getCId(), customer1);
+        customer1.setCustomerName("Aman");
+        Customer existingCustomer = customerService.updateCustomerById(customer1.getCustomerId(), customer1);
         assertNotNull(existingCustomer);
-        assertEquals("Aman", customer1.getCName());
+        assertEquals("Aman", customer1.getCustomerName());
         verify(customerRepository, times(2)).findById(1L);
     }
 

@@ -85,7 +85,7 @@ public class MeterServiceTest {
         when(meterRepository.findById(anyLong())).thenReturn(Optional.of(meter));
         when(meterRepository.save(any(Meter.class))).thenReturn(meter);
         meter.setMinBillAmount(3500F);
-        Meter existingMeter = meterService.updateMeter(meter.getMId(), meter);
+        Meter existingMeter = meterService.updateMeter(meter.getMeterId(), meter);
         assertNotNull(existingMeter);
         assertEquals(3500, meter.getMinBillAmount());
         verify(meterRepository).findById(1L);
