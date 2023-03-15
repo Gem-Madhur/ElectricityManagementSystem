@@ -8,7 +8,7 @@ import com.demoproject.ems.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface CustomerService {
-    List<Customer> getCustomers () throws DataNotFoundException;
+    List<Customer> getCustomers() throws DataNotFoundException;
 
     Customer getCustomerById(Long customerId) throws IdNotFoundException;
 

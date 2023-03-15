@@ -14,22 +14,23 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class MeterServiceIm implements MeterService{
+public class MeterServiceIm implements MeterService {
 
     /**
-     * Autowired meterRepository
+     * Autowired meterRepository.
      */
     @Autowired
     private MeterRepository meterRepository;
 
     /**
-     * to get List of all Meters
+     * to get List of all Meters.
+     *
      * @return List of Meters
      */
     @Override
-    public List<Meter> getMeters() throws DataNotFoundException{
+    public List<Meter> getMeters() throws DataNotFoundException {
         List<Meter> meterList = meterRepository.findAll();
-        if(meterList.size()==0){
+        if (meterList.size() == 0) {
             log.info("No Customer Found");
             throw new DataNotFoundException("List is Empty");
         }
@@ -38,7 +39,7 @@ public class MeterServiceIm implements MeterService{
     }
 
     /**
-     * to get Meters details with Meter's ID
+     * to get Meters details with Meter's ID.
      *
      * @param meterId - Meter's ID
      * @return Meter's Details
@@ -55,7 +56,8 @@ public class MeterServiceIm implements MeterService{
     }
 
     /**
-     * to Add a new Meter
+     * to Add a new Meter.
+     *
      * @param meter - Meter's Details
      * @return Meter's Details
      */
@@ -69,12 +71,12 @@ public class MeterServiceIm implements MeterService{
             throw new ResourceNotFoundException("Please enter the Minimum Bill Amount.");
         }
         log.info("Meter Added");
-    meterRepository.save(meter);
-    return meter;
+        meterRepository.save(meter);
+        return meter;
     }
 
     /**
-     * to Update Meter Details
+     * to Update Meter Details.
      *
      * @param meterId - Meter's ID
      * @param meter   - Meter's Details
@@ -95,7 +97,7 @@ public class MeterServiceIm implements MeterService{
     }
 
     /**
-     * to Delete a Meter
+     * to Delete a Meter.
      *
      * @param meterId - Meter's ID
      */

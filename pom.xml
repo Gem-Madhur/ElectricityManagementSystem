@@ -15,6 +15,10 @@
 	<description>Electricity Management System Demo Project</description>
 	<properties>
 		<java.version>17</java.version>
+		<plugin.checkstyle.version>3.2.0</plugin.checkstyle.version>
+		<plugin.owasp.version>7.2.1</plugin.owasp.version>
+
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -92,12 +96,26 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>7.2.1</version>
-				<!--				<configuration>-->
-				<!--					<retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>-->
-				<!--				</configuration>-->
+				<version>${plugin.owasp.version}</version>
 				<executions>
 					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${plugin.checkstyle.version}</version>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>

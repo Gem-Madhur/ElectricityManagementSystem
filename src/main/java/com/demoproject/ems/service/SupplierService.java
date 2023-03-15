@@ -8,7 +8,7 @@ import com.demoproject.ems.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface SupplierService {
-    List<Supplier> getSuppliers() throws ResourceNotFoundException , DataNotFoundException;
+    List<Supplier> getSuppliers() throws ResourceNotFoundException, DataNotFoundException;
 
     Supplier getSupplierById(Long supplierId) throws IdNotFoundException;
 

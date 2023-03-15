@@ -17,22 +17,23 @@ import java.util.List;
 public class MeterController {
 
     /**
-     * Autowired meterServiceIm
+     * Autowired meterServiceIm.
      */
     @Autowired
     private MeterServiceIm meterServiceIm;
 
     /**
-     * to get List of all Meters
+     * to get List of all Meters.
+     *
      * @return ResponseEntity
      */
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Meter>> getMeters() throws DataNotFoundException{
+    public ResponseEntity<List<Meter>> getMeters() throws DataNotFoundException {
         return new ResponseEntity<>(meterServiceIm.getMeters(), HttpStatus.OK);
     }
 
     /**
-     * to get Meters details with Meter's ID
+     * to get Meters details with Meter's ID.
      *
      * @param meterId - Meter's ID
      * @return ResponseEntity
@@ -43,17 +44,18 @@ public class MeterController {
     }
 
     /**
-     * to Add a new Meter
+     * to Add a new Meter.
+     *
      * @param meter - Meter's Details
      * @return ResponseEntity
      */
-    @PostMapping(path = "/addMeter",produces = "application/json",consumes ="application/json")
-    public ResponseEntity<Meter> addMeter(@RequestBody final Meter meter) throws ResourceNotFoundException{
-        return new ResponseEntity<>(meterServiceIm.addMeter(meter),HttpStatus.CREATED);
+    @PostMapping(path = "/addMeter", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Meter> addMeter(@RequestBody final Meter meter) throws ResourceNotFoundException {
+        return new ResponseEntity<>(meterServiceIm.addMeter(meter), HttpStatus.CREATED);
     }
 
     /**
-     * to Update Meter Details
+     * to Update Meter Details.
      *
      * @param meterId - Meter's ID
      * @param meter   - Meter's Details
@@ -65,7 +67,7 @@ public class MeterController {
     }
 
     /**
-     * to Delete a Meter
+     * to Delete a Meter.
      *
      * @param meterId - Meter's ID
      * @return ResponseEntity

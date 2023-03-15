@@ -9,5 +9,4 @@ class ElectricityManagementSystemApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

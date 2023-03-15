@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface MeterRepository extends JpaRepository<Meter,Long> {
+public interface MeterRepository extends JpaRepository<Meter, Long> {
 }

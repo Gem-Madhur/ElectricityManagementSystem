@@ -1,7 +1,7 @@
 package com.demoproject.ems.exception;
 
 public class ResourceNotFoundException extends Exception {
-    public ResourceNotFoundException(final String message){
+    public ResourceNotFoundException(final String message) {
         super(message);
     }
 }

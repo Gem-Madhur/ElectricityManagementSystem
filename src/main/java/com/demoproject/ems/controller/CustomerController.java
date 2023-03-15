@@ -17,22 +17,23 @@ import java.util.List;
 public class CustomerController {
 
     /**
-     * Autowired customerServiceIm
+     * Autowired customerServiceIm.
      */
     @Autowired
     private CustomerServiceIm customerServiceIm;
 
     /**
-     * To get List of all Customers
+     * To get List of all Customers.
+     *
      * @return ResponseEntity
      */
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Customer>> getCustomers() throws DataNotFoundException{
-    return new ResponseEntity<>(customerServiceIm.getCustomers(), HttpStatus.OK);
+    public ResponseEntity<List<Customer>> getCustomers() throws DataNotFoundException {
+        return new ResponseEntity<>(customerServiceIm.getCustomers(), HttpStatus.OK);
     }
 
     /**
-     * To get Details of Customer with Customer's ID
+     * To get Details of Customer with Customer's ID.
      *
      * @param customerId - Customer's ID
      * @return ResponseEntity
@@ -43,17 +44,18 @@ public class CustomerController {
     }
 
     /**
-     * To Add a new Customer
+     * To Add a new Customer.
+     *
      * @param customer - Customer's details
      * @return ResponseEntity
      */
-    @PostMapping(path = "/addCustomer",produces = "application/json",consumes = "application/json")
-    public ResponseEntity<Customer> addCustomer(@RequestBody final Customer customer)throws ResourceNotFoundException{
-        return new ResponseEntity<>(customerServiceIm.addCustomer(customer),HttpStatus.CREATED);
+    @PostMapping(path = "/addCustomer", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Customer> addCustomer(@RequestBody final Customer customer) throws ResourceNotFoundException {
+        return new ResponseEntity<>(customerServiceIm.addCustomer(customer), HttpStatus.CREATED);
     }
 
     /**
-     * to Delete a Customer
+     * to Delete a Customer.
      *
      * @param customerId - Customer's ID
      * @return ResponseEntity
@@ -65,7 +67,7 @@ public class CustomerController {
     }
 
     /**
-     * to Update Customer Details
+     * to Update Customer Details.
      *
      * @param customerId - Customer's ID
      * @param customer   - Customer's details
@@ -78,7 +80,7 @@ public class CustomerController {
 
     /**
      * ]
-     * to Update Current reading in a bill and to get the Bill Amount
+     * to Update Current reading in a bill and to get the Bill Amount.
      *
      * @param customerId  Customer's ID
      * @param currReading - current reading of the bill
@@ -88,7 +90,7 @@ public class CustomerController {
     @PutMapping(produces = "application/json")
     public ResponseEntity<Customer> updateCurrentReading(@RequestParam final Long customerId, @RequestParam final Long currReading) throws Exception {
         Customer customer = customerServiceIm.updateCurrentReading(customerId, currReading);
-        return new ResponseEntity<>(customer,HttpStatus.OK);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
 }

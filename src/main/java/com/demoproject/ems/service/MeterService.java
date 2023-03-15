@@ -8,7 +8,7 @@ import com.demoproject.ems.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface MeterService {
-    List<Meter> getMeters () throws DataNotFoundException;
+    List<Meter> getMeters() throws DataNotFoundException;
 
     Meter getMeterById(Long meterId) throws IdNotFoundException;
 

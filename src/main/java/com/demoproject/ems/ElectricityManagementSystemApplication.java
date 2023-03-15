@@ -8,12 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Electricity Management System",
-		description = "Spring boot CRUD application for Electricity Management System",
-		version = "1.0",
-		contact = @Contact(name = "Madhur Singhal",email = "madhur.singhal@geminisolutions.com")))
+        description = "Spring boot CRUD application for Electricity Management System",
+        version = "1.0",
+        contact = @Contact(name = "Madhur Singhal", email = "madhur.singhal@geminisolutions.com")))
 public class ElectricityManagementSystemApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ElectricityManagementSystemApplication.class, args);
-	}
+    public static void main(final String[] args) {
+        SpringApplication.run(ElectricityManagementSystemApplication.class, args);
+    }
 }

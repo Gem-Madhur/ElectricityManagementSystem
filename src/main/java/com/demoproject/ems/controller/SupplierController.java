@@ -17,22 +17,23 @@ import java.util.List;
 public class SupplierController {
 
     /**
-     * Autowired supplierServiceIm
+     * Autowired supplierServiceIm.
      */
     @Autowired
     private SupplierServiceIm supplierServiceIm;
 
     /**
-     * to get List of all Suppliers
+     * to get List of all Suppliers.
+     *
      * @return ResponseEntity
      */
     @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Supplier>> getSuppliers() throws DataNotFoundException{
+    public ResponseEntity<List<Supplier>> getSuppliers() throws DataNotFoundException {
         return new ResponseEntity<>(supplierServiceIm.getSuppliers(), HttpStatus.OK);
     }
 
     /**
-     * to get Details of Supplier with Supplier's ID
+     * to get Details of Supplier with Supplier's ID.
      *
      * @param supplierId - Supplier's ID
      * @return ResponseEntity
@@ -43,17 +44,18 @@ public class SupplierController {
     }
 
     /**
-     * to Add a new Supplier
+     * to Add a new Supplier.
+     *
      * @param supplier - Supplier's Details
      * @return ResponseEntity
      */
-    @PostMapping(path = "/addSupplier",produces = "application/json",consumes = "application/json")
-    public ResponseEntity<Supplier> addSupplier(@RequestBody final Supplier supplier) throws ResourceNotFoundException{
-        return new ResponseEntity<>(supplierServiceIm.addSupplier(supplier),HttpStatus.CREATED);
+    @PostMapping(path = "/addSupplier", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Supplier> addSupplier(@RequestBody final Supplier supplier) throws ResourceNotFoundException {
+        return new ResponseEntity<>(supplierServiceIm.addSupplier(supplier), HttpStatus.CREATED);
     }
 
     /**
-     * to Update Supplier Details
+     * to Update Supplier Details.
      *
      * @param supplierId - Supplier's ID
      * @param supplier   - Supplier's Details
@@ -65,7 +67,7 @@ public class SupplierController {
     }
 
     /**
-     * to Delete a Supplier
+     * to Delete a Supplier.
      *
      * @param supplierId -Supplier's ID
      * @return ResponseEntity

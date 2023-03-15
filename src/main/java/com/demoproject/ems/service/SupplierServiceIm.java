@@ -14,31 +14,32 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class SupplierServiceIm implements SupplierService{
+public class SupplierServiceIm implements SupplierService {
 
     /**
-     * Autowired supplierRepository
+     * Autowired supplierRepository.
      */
     @Autowired
     private SupplierRepository supplierRepository;
 
     /**
-     * to get List of all Suppliers
+     * to get List of all Suppliers.
+     *
      * @return List of Suppliers
      */
     @Override
-    public List<Supplier> getSuppliers() throws DataNotFoundException{
+    public List<Supplier> getSuppliers() throws DataNotFoundException {
         List<Supplier> supplierList = supplierRepository.findAll();
-        if(supplierList.size()==0){
+        if (supplierList.size() == 0) {
             log.info("Supplier list is empty");
             throw new DataNotFoundException("Please enter Suppliers in list");
         }
-        log.info(supplierList.size()+" total suppliers found");
+        log.info(supplierList.size() + " total suppliers found");
         return supplierList;
     }
 
     /**
-     * to get Details of Supplier with Supplier's ID
+     * to get Details of Supplier with Supplier's ID.
      *
      * @param supplierId - Supplier's ID
      * @return Supplier's Details
@@ -55,12 +56,13 @@ public class SupplierServiceIm implements SupplierService{
     }
 
     /**
-     * to Add a new Supplier
+     * to Add a new Supplier.
+     *
      * @param supplier - Supplier's Details
      * @return Supplier's Details
      */
     @Override
-    public Supplier addSupplier(final Supplier supplier) throws ResourceNotFoundException{
+    public Supplier addSupplier(final Supplier supplier) throws ResourceNotFoundException {
         if (supplier.getSupplierName() == null) {
             log.info("Supplier name is missing");
             throw new ResourceNotFoundException("Please enter valid Supplier name.");
@@ -73,7 +75,7 @@ public class SupplierServiceIm implements SupplierService{
     }
 
     /**
-     * to Update Supplier Details
+     * to Update Supplier Details.
      *
      * @param supplierId - Supplier's ID
      * @param supplier   - Supplier's Details
@@ -95,7 +97,7 @@ public class SupplierServiceIm implements SupplierService{
     }
 
     /**
-     * to Delete a Supplier
+     * to Delete a Supplier.
      *
      * @param supplierId -Supplier's ID
      */

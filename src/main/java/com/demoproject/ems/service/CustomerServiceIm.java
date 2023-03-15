@@ -20,28 +20,30 @@ import java.util.Optional;
 public class CustomerServiceIm implements CustomerService {
 
     /**
-     * Autowired customerRepository
+     * Autowired customerRepository.
      */
     @Autowired
     private CustomerRepository customerRepository;
 
     /**
-     * To get List of all Customers
+     * To get List of all Customers.
+     *
      * @return List of Customers
-]     */
+     * ]
+     */
     @Override
-    public List<Customer> getCustomers() throws DataNotFoundException{
+    public List<Customer> getCustomers() throws DataNotFoundException {
         List<Customer> customerList = customerRepository.findAll();
-        if(customerList.size()== 0){
+        if (customerList.size() == 0) {
             log.info("List is Empty.");
             throw new DataNotFoundException("Please enter Customers in the list");
         }
-        log.info(customerList.size() +" total customers found");
+        log.info(customerList.size() + " total customers found");
         return customerList;
     }
 
     /**
-     * To get Details of Customer with Customer's ID
+     * To get Details of Customer with Customer's ID.
      *
      * @param customerId - Customer's ID
      * @return Customer Details
@@ -58,7 +60,8 @@ public class CustomerServiceIm implements CustomerService {
     }
 
     /**
-     * To Add a new Customer
+     * To Add a new Customer.
+     *
      * @param customer - Customer's details
      * @return Customer's Details
      */
@@ -66,9 +69,9 @@ public class CustomerServiceIm implements CustomerService {
     public Customer addCustomer(final Customer customer) throws ResourceNotFoundException {
         Optional<Meter> meterOptional = Optional.ofNullable(customer.getMeter());
         Optional<Supplier> supplierOptional = Optional.ofNullable(customer.getSupplier());
-        if (customer.getCustomerName() == null || customer.getCustomerAddress() == null ||
-                customer.getConnectionDate() == null || customer.getLastReading() == null ||
-                customer.getCurrentReading() == null) {
+        if (customer.getCustomerName() == null || customer.getCustomerAddress() == null
+                || customer.getConnectionDate() == null || customer.getLastReading() == null
+                || customer.getCurrentReading() == null) {
             log.info("Customer Details is missing");
             throw new ResourceNotFoundException("Please enter valid Customer Details");
         } else if (meterOptional.isEmpty() && supplierOptional.isEmpty()) {
@@ -87,7 +90,7 @@ public class CustomerServiceIm implements CustomerService {
     }
 
     /**
-     * to Delete a Customer
+     * to Delete a Customer.
      *
      * @param customerId - Customer's ID
      */
@@ -103,7 +106,7 @@ public class CustomerServiceIm implements CustomerService {
     }
 
     /**
-     * to Update Customer Details
+     * to Update Customer Details.
      *
      * @param customerId - Customer's ID
      * @param customer   - Customer's details
@@ -131,7 +134,7 @@ public class CustomerServiceIm implements CustomerService {
     }
 
     /**
-     * to Update Current reading in a bill and to get the Bill Amount
+     * to Update Current reading in a bill and to get the Bill Amount.
      *
      * @param customerId  Customer's ID
      * @param currReading - current reading of the bill
@@ -160,19 +163,16 @@ public class CustomerServiceIm implements CustomerService {
             billAmount = 100 * 3;
         } else if (netUnitConsumed < 200) {
             billAmount = 100 * 3 + (netUnitConsumed - 100) * 5;
-        } else if(netUnitConsumed < 300) {
-            billAmount = 100 * 3 + 100*5 + (netUnitConsumed-200)*6;
+        } else if (netUnitConsumed < 300) {
+            billAmount = 100 * 3 + 100 * 5 + (netUnitConsumed - 200) * 6;
+        } else if (netUnitConsumed < 400) {
+            billAmount = 100 * 3 + 100 * 5 + 100 * 6 + (netUnitConsumed - 300) * 7;
+        } else if (netUnitConsumed < 500) {
+            billAmount = 100 * 3 + 100 * 5 + 100 * 6 + 100 * 7 + (netUnitConsumed - 400) * 7.5;
+        } else if (netUnitConsumed > 500) {
+            billAmount = 100 * 3 + 100 * 5 + 100 * 6 + 100 * 7 + 100 * 7.5 + (netUnitConsumed - 500) * 8;
         }
-        else if(netUnitConsumed < 400) {
-            billAmount = 100 * 3 + 100 * 5 + 100*6 +(netUnitConsumed-300)*7;
-        }
-        else if(netUnitConsumed < 500) {
-            billAmount = 100 * 3 + 100 * 5 + 100 * 6 + 100*7+ (netUnitConsumed-400)*7.5;
-        }
-        else if(netUnitConsumed > 500) {
-            billAmount = 100 * 3 + 100 * 5 + 100 * 6 + 100 * 7 + 100*7.5 + (netUnitConsumed-500)*8;
-        }
-        double finalBillAmount = billAmount>= customer.getMeter().getMinBillAmount()? billAmount : customer.getMeter().getMinBillAmount();
+        double finalBillAmount = billAmount >= customer.getMeter().getMinBillAmount() ? billAmount : customer.getMeter().getMinBillAmount();
         customer.setBillAmount(finalBillAmount);
 
         log.info("Customer Data is Updated");
