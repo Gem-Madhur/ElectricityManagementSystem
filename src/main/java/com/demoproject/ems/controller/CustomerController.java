@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// ye coomit bhi hatna chaiye
+
 @RestController
 @RequestMapping(path = "/customers")
 public class CustomerController {
