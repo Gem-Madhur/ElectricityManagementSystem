@@ -20,7 +20,6 @@ public class CustomerController {
      * Autowired customerServiceIm.
      */
     @Autowired
-    // yaha se ye commremove the commit testit hatna chaiye
     private CustomerServiceIm customerServiceIm;
 
     /**
